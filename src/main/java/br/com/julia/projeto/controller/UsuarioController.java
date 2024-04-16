@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.julia.projeto.dto.UsuarioDTO;
 import br.com.julia.projeto.service.UsuarioService;
 
-@RestController
+
+@RestController 
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
 	
