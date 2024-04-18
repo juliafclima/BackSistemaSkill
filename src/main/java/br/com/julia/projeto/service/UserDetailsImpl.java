@@ -16,16 +16,17 @@ public class UserDetailsImpl implements UserDetails {
 	
 	private String password;
 	
-	public UserDetailsImpl(Long id, String username, Collection<? extends GrantedAuthority> authorities) {
+	public UserDetailsImpl(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
 			super();
-			this.id = id;
+			this.id = id; 
 			this.username = username;
+			this.password = password;
 			this.authorities = authorities;
 		}
 	
 	public static UserDetailsImpl build(UsuarioEntity usuario) {
 			
-		return new UserDetailsImpl(usuario.getId(), usuario.getLogin(), new ArrayList<>());
+		return new UserDetailsImpl(usuario.getId(), usuario.getLogin(), usuario.getSenha(), new ArrayList<>());
 	}
 	
 	private Collection<? extends GrantedAuthority> authorities;

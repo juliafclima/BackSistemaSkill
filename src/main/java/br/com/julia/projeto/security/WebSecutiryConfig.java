@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import br.com.julia.projeto.security.jwt.AuthEntryPointJwt;
+import br.com.julia.projeto.security.jwt.AuthFilterToken;
 
 @Configuration
 @EnableMethodSecurity
@@ -34,6 +35,11 @@ public class WebSecutiryConfig {
 	}
 	
 	@Bean
+	public AuthFilterToken authFilterToken() {
+		return new AuthFilterToken();
+	}
+	
+	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		
 		http
@@ -42,8 +48,12 @@ public class WebSecutiryConfig {
 			.csrf(csrf -> csrf.disable())
 			.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll());
+			.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
+											.requestMatchers("/usuario/**").permitAll()
+											.anyRequest().authenticated());
 			
+		http.addFilterBefore(authFilterToken(), UsernamePasswordAuthenticationFilter.class);
+		
 		return http.build();
 	}	
 }
