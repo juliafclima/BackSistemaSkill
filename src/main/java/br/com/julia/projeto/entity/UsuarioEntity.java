@@ -1,6 +1,6 @@
 package br.com.julia.projeto.entity;
 
-import java.util.Objects;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
@@ -11,13 +11,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "USUARIO")
+@Getter
+@Setter
+@NoArgsConstructor
 public class UsuarioEntity {
 
-	// entidades da tabela usuario
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -28,60 +34,10 @@ public class UsuarioEntity {
 	@Column(nullable = false)
 	private String senha;
 	
-	// constructor
-	// converte o dto para usuario
+	@OneToMany
+	private List<UsuarioSkillEntity> usuarioSkillEntity;
+	
 	public UsuarioEntity(UsuarioDTO usuario) {
 		BeanUtils.copyProperties(usuario, this);
 	}
-	
-	public UsuarioEntity() {
-			
-	}
-	
-	// setters and getters
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	// hashcode and equals -> id como criterio de igualdade entre classes
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		
-		if (obj == null)
-			return false;
-		
-		if (getClass() != obj.getClass())
-			return false;
-		
-		UsuarioEntity other = (UsuarioEntity) obj;
-		
-		return Objects.equals(id, other.id);
-	}	
 }

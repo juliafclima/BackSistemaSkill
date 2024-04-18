@@ -1,6 +1,6 @@
 package br.com.julia.projeto.entity;
 
-import java.util.Objects;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
@@ -10,10 +10,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "SKILL")
+@Getter
+@Setter
+@NoArgsConstructor
 public class SkillEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,76 +30,15 @@ public class SkillEntity {
 	private String nome;
 	
 	@Column(nullable = false)
-	private String level;
-	
-	@Column(nullable = false)
 	private String descricao;
 	
 	@Column(nullable = false)
 	private String url;
+	
+	@OneToMany
+	private List<UsuarioSkillEntity> usuarioSkillEntity;
 
 	public SkillEntity(SkillDTO skill) {
 		BeanUtils.copyProperties(skill, this);
-	}
-	
-	public SkillEntity() {
-	
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SkillEntity other = (SkillEntity) obj;
-		return Objects.equals(id, other.id);
 	}
 }
