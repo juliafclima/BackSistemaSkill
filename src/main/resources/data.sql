@@ -1,7 +1,7 @@
-INSERT INTO public.usuario(id, login, senha) VALUES 
-	(1, 'julia', '123'),
-	(2, 'mateus', '123'),
-	(3, 'liz', '123');
+INSERT INTO public.usuario(id, login, senha, situacao) VALUES 
+	(1, 'julia', '123', 'PENDENTE'),
+	(2, 'mateus', '123', 'ATIVO'),
+	(3, 'liz', '123', 'INATIVO');
 	
 INSERT INTO public.skill(id, nome, descricao, url) VALUES 
 	(1, 'Python', 'Linguagem de programação interpretada', 'https://www.python.org/'),
