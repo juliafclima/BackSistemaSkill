@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.julia.projeto.dto.UsuarioDTO;
 import br.com.julia.projeto.entity.UsuarioEntity;
@@ -41,7 +42,7 @@ public class UsuarioService {
 		usuarioEntity.setId(null);
 		usuarioRepository.save(usuarioEntity);
 		
-		emailService.enviarEmailTexto(usuario.getLogin(), "🎉 Bem-vindo ao nosso sistema! 🎉", "É com grande alegria que recebemos a notícia do seu cadastro em nossa plataforma! Seja muito bem-vindo(a) à nossa comunidade! 🥳 Estamos animados em tê-lo(a) conosco e esperamos que sua experiência aqui seja incrível.");
+		emailService.envioEmailCadastro(usuario);
 	}
 	
 	public UsuarioDTO alterar(UsuarioDTO usuario) {

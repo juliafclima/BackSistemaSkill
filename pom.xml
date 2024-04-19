@@ -81,12 +81,6 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 		
-				<!-- https://mvnrepository.com/artifact/javax.mail/mail --><dependency>
-    <groupId>com.sun.mail</groupId>
-    <artifactId>javax.mail</artifactId>
-    <version>1.6.2</version> <!-- ou a versão mais recente -->
-</dependency>
-
 	</dependencies>
 
 	<build>
