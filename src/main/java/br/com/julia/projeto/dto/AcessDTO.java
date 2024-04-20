@@ -7,12 +7,11 @@ import lombok.Setter;
 @Setter
 public class AcessDTO {
 
-	private String token;
+	 private Long userId;
+	    private String token;
 
-	//TODO implementar retornar o usuario e liberacoes (authorities)
-	
-	public AcessDTO(String token) {
-		super();
-		this.token = token;
-	}
+	    public AcessDTO(Long userId, String token) {
+	        this.userId = userId;
+	        this.token = token;
+	    }
 }

@@ -18,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
 	
 	public UserDetailsImpl(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
 			super();
-			this.id = id; 
+			this.setId(id); 
 			this.username = username;
 			this.password = password;
 			this.authorities = authorities;
@@ -64,5 +64,13 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
