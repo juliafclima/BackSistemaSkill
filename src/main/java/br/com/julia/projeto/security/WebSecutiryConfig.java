@@ -49,6 +49,9 @@ public class WebSecutiryConfig {
 			.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
+					.requestMatchers("/usuario/**").permitAll()
+					.requestMatchers("/skill/**").permitAll()
+					.requestMatchers("/usuario-skill/**").permitAll()
 											.anyRequest().authenticated());
 			
 		http.addFilterBefore(authFilterToken(), UsernamePasswordAuthenticationFilter.class);
