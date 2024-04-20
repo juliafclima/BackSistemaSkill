@@ -25,10 +25,11 @@ public class UsuarioSkillService {
 		usuarioSkillRepository.save(usuarioSkillEntity);
 	}
 	
-	public UsuarioSkillDTO alterar(UsuarioSkillDTO usuarioSkill) {
-		UsuarioSkillEntity usuarioSkillEntity = new UsuarioSkillEntity(usuarioSkill);
-		return new UsuarioSkillDTO(usuarioSkillRepository.save(usuarioSkillEntity));
-	}
+	 public UsuarioSkillDTO atualizarNivel(Long id, String novoNivel) {
+	        UsuarioSkillEntity usuarioSkill = usuarioSkillRepository.findById(id).orElseThrow(() -> new RuntimeException("Habilidade de usuário não encontrada com o ID: " + id));
+	        usuarioSkill.setLevel(novoNivel);
+	        return new UsuarioSkillDTO(usuarioSkillRepository.save(usuarioSkill));
+	    }
 	
 	public void excluir(Long id) {
 		UsuarioSkillEntity usuarioSkill = usuarioSkillRepository.findById(id).get();
