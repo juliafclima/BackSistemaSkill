@@ -43,6 +43,10 @@ Para executar o projeto, você pode utilizar o plugin Maven Spring Boot:
 mvn spring-boot:run
 ```
 
+- [Front-End web](https://github.com/juliafclima/FrontSistemaSkill)
+
+- [Front-End mobile](https://github.com/juliafclima/mobilesistemaskill)
+
 ## Configuração do Banco de Dados
 
 Certifique-se de ter o PostgreSQL instalado e configurado corretamente. Por padrão, o projeto está configurado para usar o PostgreSQL como banco de dados. Você pode modificar as configurações de conexão no arquivo `application.properties`.  Estas são as configurações do Banco de Dados para este projeto:
