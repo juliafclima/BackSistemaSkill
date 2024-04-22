@@ -73,7 +73,8 @@ spring.datasource.password=123456
 
 ## Documentação da API
 
-A documentação da API está disponível em [Swagger](link_para_documentação).
+A documentação da API está disponível no arquivo ```Create SistemaSkill.postman_collection.json``` para importação via Postman
+
 
 ## Conecte-se comigo 
 <a href="https://www.linkedin.com/in/juliafclima/" target="_blank"><img loading="lazy" src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
