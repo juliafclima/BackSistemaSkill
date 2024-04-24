@@ -49,7 +49,18 @@ public class WebSecutiryConfig {
 			.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(auth -> auth
-					.requestMatchers("/auth/**").permitAll()
+					.requestMatchers("/auth/**",
+							"/v2/api-docs",
+							"/v3/api-docs",
+							"/v3/api-docs/**",
+							"/swagger-resources",
+							"/swagger-resources/**",
+							"/configuration/ui",
+							"/configuration/security",
+							"/swagger-ui/**",
+							"/webjars/**",
+							"/swagger-ui.html"
+							).permitAll()
 					.requestMatchers("/usuario/**").permitAll()
 					.requestMatchers("/skill/**").permitAll()
 					.requestMatchers("/usuario-skill/**").permitAll()
