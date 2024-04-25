@@ -49,7 +49,8 @@ public class WebSecutiryConfig {
 			.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(auth -> auth
-					.requestMatchers("/auth/**",
+					.requestMatchers(
+							"/auth/**",
 							"/v2/api-docs",
 							"/v3/api-docs",
 							"/v3/api-docs/**",
@@ -59,12 +60,10 @@ public class WebSecutiryConfig {
 							"/configuration/security",
 							"/swagger-ui/**",
 							"/webjars/**",
-							"/swagger-ui.html"
-							).permitAll()
-					.requestMatchers("/usuario/**").permitAll()
-					.requestMatchers("/skill/**").permitAll()
-					.requestMatchers("/usuario-skill/**").permitAll()
-											.anyRequest().authenticated());
+							"/swagger-ui.html",
+							"/usuario/**",
+							"/skill/**",
+							"/usuario-skill/**").permitAll().anyRequest().authenticated());
 			
 		http.addFilterBefore(authFilterToken(), UsernamePasswordAuthenticationFilter.class);
 		
