@@ -1,10 +1,15 @@
 package br.com.julia.projeto.exception;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+
+import br.com.julia.projeto.exception.entity.ErrorResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -19,5 +24,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         String mensagemErro = "Recurso não encontrado: " + ex.getMessage();
         return new ResponseEntity<>(mensagemErro, HttpStatus.NOT_FOUND);
+    }
+
+    
+    @ExceptionHandler(InvalidResourceException.class)
+    public ResponseEntity<List<ErrorResponse>> handleInvalidResourceException(InvalidResourceException ex) {
+        List<ErrorResponse> errors = new ArrayList<>();
+        errors.add(new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        return ResponseEntity.badRequest().body(errors);
     }
 }

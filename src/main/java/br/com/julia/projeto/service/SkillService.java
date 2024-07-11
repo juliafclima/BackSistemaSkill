@@ -15,41 +15,38 @@ import br.com.julia.projeto.repository.SkillRepository;
 @Service
 public class SkillService {
 
-	@Autowired
-	private SkillRepository skillRepository;
+    @Autowired
+    private SkillRepository skillRepository;
 
-	private String MESSAGEM_EXCEPTION = "Skill não encontrada para o ID: ";
+    private static final String MESSAGEM_EXCEPTION = "Habilidade não encontrada com o ID: ";
 
-	public List<SkillDTO> listarTodos(String nome, Pageable pageable, String sortBy, String sortDirection) {
-		Page<SkillEntity> skills;
+    public List<SkillDTO> listarTodos(String nome, Pageable pageable, String sortBy, String sortDirection) {
+        Page<SkillEntity> skills;
+        if (nome != null && !nome.isEmpty()) {
+            skills = skillRepository.findByNomeContainingIgnoreCase(nome, pageable);
+        } else {
+            skills = skillRepository.findAll(pageable);
+        }
+        return skills.map(SkillDTO::new).getContent();
+    }
 
-		if (nome != null && !nome.isEmpty()) {
-			skills = skillRepository.findByNomeContainingIgnoreCase(nome, pageable);
-		} else {
-			skills = skillRepository.findAll(pageable);
-		}
+    public void inserir(SkillDTO skill) {
+        SkillEntity skillEntity = new SkillEntity(skill);
+        skillRepository.save(skillEntity);
+    }
 
-		return skills.map(SkillDTO::new).getContent();
-	}
+    public SkillDTO alterar(SkillDTO skill) {
+        SkillEntity skillEntity = new SkillEntity(skill);
+        return new SkillDTO(skillRepository.save(skillEntity));
+    }
 
-	public void inserir(SkillDTO skill) {
-		SkillEntity skillEntity = new SkillEntity(skill);
-		skillRepository.save(skillEntity);
-	}
+    public void excluir(Long id) {
+        SkillEntity skill = skillRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(MESSAGEM_EXCEPTION + id));
+        skillRepository.delete(skill);
+    }
 
-	public SkillDTO alterar(SkillDTO skill) {
-		SkillEntity skillEntity = new SkillEntity(skill);
-		return new SkillDTO(skillRepository.save(skillEntity));
-	}
-
-	public void excluir(Long id) {
-		SkillEntity skill = skillRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(MESSAGEM_EXCEPTION + id));
-		;
-		skillRepository.delete(skill);
-	}
-
-	public SkillDTO buscarPorId(Long id) {
+    public SkillDTO buscarPorId(Long id) {
         SkillEntity skill = skillRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(MESSAGEM_EXCEPTION + id));
         return new SkillDTO(skill);

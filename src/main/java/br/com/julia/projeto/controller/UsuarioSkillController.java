@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.julia.projeto.dto.UsuarioSkillDTO;
-import br.com.julia.projeto.entity.ErrorResponse;
 import br.com.julia.projeto.exception.ResourceNotFoundException;
+import br.com.julia.projeto.exception.entity.ErrorResponse;
 import br.com.julia.projeto.service.UsuarioSkillService;
 
 @RestController

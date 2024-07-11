@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.julia.projeto.dto.UsuarioDTO;
 import br.com.julia.projeto.entity.UsuarioEntity;
-import br.com.julia.projeto.entity.enuns.TipoSituacaoUsuario;
+import br.com.julia.projeto.exception.InvalidResourceException;
 import br.com.julia.projeto.exception.ResourceNotFoundException;
 import br.com.julia.projeto.repository.UsuarioRepository;
 
@@ -23,7 +23,7 @@ public class UsuarioService {
 
 	@Autowired
 	private EmailService emailService;
-	
+
 	private static final String MENSAGEM_EXCEPTION = "Usuário não encontrado para o ID: ";
 
 	public List<UsuarioDTO> listarTodos() {
@@ -40,7 +40,6 @@ public class UsuarioService {
 	public void inserirNovoUsuario(UsuarioDTO usuario) {
 		UsuarioEntity usuarioEntity = new UsuarioEntity(usuario);
 		usuarioEntity.setSenha(passwordEncoder.encode(usuario.getSenha()));
-		usuarioEntity.setSituacao(TipoSituacaoUsuario.ATIVO);
 		usuarioEntity.setId(null);
 		usuarioRepository.save(usuarioEntity);
 
@@ -48,20 +47,49 @@ public class UsuarioService {
 	}
 
 	public UsuarioDTO alterar(UsuarioDTO usuario) {
-		UsuarioEntity usuarioEntity = new UsuarioEntity(usuario);
-		usuarioEntity.setSenha(passwordEncoder.encode(usuario.getSenha()));
-		return new UsuarioDTO(usuarioRepository.save(usuarioEntity));
+		if (usuario.getId() == null || usuario.getLogin().isEmpty()) {
+			throw new InvalidResourceException("ID do usuário é obrigatório para a alteração.");
+		}
+
+		UsuarioEntity existingUser = usuarioRepository.findById(usuario.getId()).orElseThrow(
+				() -> new ResourceNotFoundException("Usuário não encontrado para o ID: " + usuario.getId()));
+
+		if (usuario.getLogin() == null || usuario.getLogin().isEmpty()) {
+			throw new InvalidResourceException("Login do usuário é obrigatório.");
+		}
+
+		if (usuario.getLogin() != null && !usuario.getLogin().isEmpty()
+				&& !usuario.getLogin().equals(existingUser.getLogin())) {
+			existingUser.setLogin(usuario.getLogin());
+		} else if (usuario.getLogin() != null && usuario.getLogin().isEmpty()) {
+			throw new InvalidResourceException("Login do usuário não pode estar vazio.");
+		} else {
+			throw new InvalidResourceException("Login do usuário deve ser diferente do atual.");
+		}
+
+		if (usuario.getSenha() != null && !usuario.getSenha().isEmpty()
+				&& !usuario.getSenha().equals(existingUser.getSenha())) {
+			existingUser.setSenha(passwordEncoder.encode(usuario.getSenha()));
+		} else if (usuario.getSenha() != null && usuario.getSenha().isEmpty()) {
+			throw new InvalidResourceException("Senha do usuário não pode estar vazia.");
+		} else {
+			throw new InvalidResourceException("Senha do usuário deve ser diferente da atual.");
+		}
+
+		UsuarioEntity updatedUser = usuarioRepository.save(existingUser);
+
+		return new UsuarioDTO(updatedUser);
 	}
 
 	public void excluir(Long id) {
-        UsuarioEntity usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
-        usuarioRepository.delete(usuario);
-    }
+		UsuarioEntity usuario = usuarioRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
+		usuarioRepository.delete(usuario);
+	}
 
-    public UsuarioDTO buscarPorId(Long id) {
-        UsuarioEntity usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
-        return new UsuarioDTO(usuario);
-    }
+	public UsuarioDTO buscarPorId(Long id) {
+		UsuarioEntity usuario = usuarioRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
+		return new UsuarioDTO(usuario);
+	}
 }

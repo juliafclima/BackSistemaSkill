@@ -5,11 +5,8 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 
 import br.com.julia.projeto.dto.UsuarioDTO;
-import br.com.julia.projeto.entity.enuns.TipoSituacaoUsuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,10 +32,6 @@ public class UsuarioEntity {
 
 	@Column(nullable = false)
 	private String senha;
-
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	private TipoSituacaoUsuario situacao;
 
 	@OneToMany
 	private List<UsuarioSkillEntity> usuarioSkillEntity;

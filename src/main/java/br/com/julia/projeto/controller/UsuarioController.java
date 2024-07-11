@@ -36,8 +36,9 @@ public class UsuarioController {
 	}
 
 	@PutMapping
-	public UsuarioDTO alterar(@RequestBody UsuarioDTO usuario) {
-		return usuarioService.alterar(usuario);
+	public ResponseEntity<UsuarioDTO> alterar(@RequestBody UsuarioDTO usuario) {
+		UsuarioDTO usuarioAlterado = usuarioService.alterar(usuario);
+		return ResponseEntity.ok(usuarioAlterado);
 	}
 
 	@DeleteMapping("/{id}")
