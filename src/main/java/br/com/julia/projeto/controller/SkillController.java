@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.julia.projeto.dto.SkillDTO;
@@ -25,10 +26,10 @@ public class SkillController {
 	@Autowired
 	private SkillService skillService;
 
-	@GetMapping
-	public List<SkillDTO> listarTodos() {
-		return skillService.ListarTodos();
-	}
+	 @GetMapping
+	    public List<SkillDTO> listarTodos(@RequestParam(required = false) String nome) {
+	        return skillService.ListarTodos(nome);
+	    }
 
 	@PostMapping
 	public void inserir(@RequestBody SkillDTO skill) {

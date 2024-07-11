@@ -1,6 +1,7 @@
 package br.com.julia.projeto.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,16 @@ public class SkillService {
 	@Autowired
 	private SkillRepository skillRepository;
 
-	public List<SkillDTO> ListarTodos() {
-		List<SkillEntity> skills = skillRepository.findAll();
-		return skills.stream().map(SkillDTO::new).toList();
+	public List<SkillDTO> ListarTodos(String nome) {
+		List<SkillEntity> skills;
+
+		if (nome != null && !nome.isEmpty()) {
+			skills = skillRepository.findByNomeContainingIgnoreCase(nome);
+		} else {
+			skills = skillRepository.findAll();
+		}
+
+		return skills.stream().map(SkillDTO::new).collect(Collectors.toList());
 	}
 
 	public void inserir(SkillDTO skill) {
