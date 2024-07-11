@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.julia.projeto.dto.UsuarioDTO;
 import br.com.julia.projeto.entity.UsuarioEntity;
 import br.com.julia.projeto.entity.enuns.TipoSituacaoUsuario;
+import br.com.julia.projeto.exception.ResourceNotFoundException;
 import br.com.julia.projeto.repository.UsuarioRepository;
 
 @Service
@@ -22,8 +23,10 @@ public class UsuarioService {
 
 	@Autowired
 	private EmailService emailService;
+	
+	private static final String MENSAGEM_EXCEPTION = "Usuário não encontrado para o ID: ";
 
-	public List<UsuarioDTO> ListarTodos() {
+	public List<UsuarioDTO> listarTodos() {
 		List<UsuarioEntity> usuarios = usuarioRepository.findAll();
 		return usuarios.stream().map(UsuarioDTO::new).toList();
 	}
@@ -51,11 +54,14 @@ public class UsuarioService {
 	}
 
 	public void excluir(Long id) {
-		UsuarioEntity usuario = usuarioRepository.findById(id).get();
-		usuarioRepository.delete(usuario);
-	}
+        UsuarioEntity usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
+        usuarioRepository.delete(usuario);
+    }
 
-	public UsuarioDTO buscarPorId(Long id) {
-		return new UsuarioDTO(usuarioRepository.findById(id).get());
-	}
+    public UsuarioDTO buscarPorId(Long id) {
+        UsuarioEntity usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
+        return new UsuarioDTO(usuario);
+    }
 }

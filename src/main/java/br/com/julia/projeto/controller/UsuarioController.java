@@ -27,7 +27,7 @@ public class UsuarioController {
 
 	@GetMapping
 	public List<UsuarioDTO> listarTodos() {
-		return usuarioService.ListarTodos();
+		return usuarioService.listarTodos();
 	}
 
 	@PostMapping

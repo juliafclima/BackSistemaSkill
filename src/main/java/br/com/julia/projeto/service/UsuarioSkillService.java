@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.julia.projeto.dto.UsuarioSkillDTO;
 import br.com.julia.projeto.entity.UsuarioSkillEntity;
+import br.com.julia.projeto.exception.ResourceNotFoundException;
 import br.com.julia.projeto.repository.UsuarioSkillRepository;
 
 @Service
@@ -14,6 +15,8 @@ public class UsuarioSkillService {
 
 	@Autowired
 	private UsuarioSkillRepository usuarioSkillRepository;
+
+	private static final String MENSAGEM_EXCEPTION = "Habilidade de usuário não encontrada com o ID: ";
 
 	public List<UsuarioSkillDTO> ListarTodos() {
 		List<UsuarioSkillEntity> usuariosSkills = usuarioSkillRepository.findAll();
@@ -27,17 +30,19 @@ public class UsuarioSkillService {
 
 	public UsuarioSkillDTO atualizarNivel(Long id, String novoNivel) {
 		UsuarioSkillEntity usuarioSkill = usuarioSkillRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Habilidade de usuário não encontrada com o ID: " + id));
+				.orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
 		usuarioSkill.setLevel(novoNivel);
 		return new UsuarioSkillDTO(usuarioSkillRepository.save(usuarioSkill));
 	}
 
 	public void excluir(Long id) {
-		UsuarioSkillEntity usuarioSkill = usuarioSkillRepository.findById(id).get();
+		UsuarioSkillEntity usuarioSkill = usuarioSkillRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
 		usuarioSkillRepository.delete(usuarioSkill);
 	}
 
-	public UsuarioSkillDTO buscarPorId(Long id) {
-		return new UsuarioSkillDTO(usuarioSkillRepository.findById(id).get());
-	}
-}
+	 public UsuarioSkillDTO buscarPorId(Long id) {
+	        UsuarioSkillEntity usuarioSkill = usuarioSkillRepository.findById(id)
+	                .orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
+	        return new UsuarioSkillDTO(usuarioSkill);
+	    }}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.julia.projeto.dto.SkillDTO;
 import br.com.julia.projeto.entity.SkillEntity;
+import br.com.julia.projeto.exception.ResourceNotFoundException;
 import br.com.julia.projeto.repository.SkillRepository;
 
 @Service
@@ -17,16 +18,18 @@ public class SkillService {
 	@Autowired
 	private SkillRepository skillRepository;
 
+	private String MESSAGEM_EXCEPTION = "Skill não encontrada para o ID: ";
+
 	public List<SkillDTO> listarTodos(String nome, Pageable pageable, String sortBy, String sortDirection) {
-	    Page<SkillEntity> skills;
+		Page<SkillEntity> skills;
 
-	    if (nome != null && !nome.isEmpty()) {
-	        skills = skillRepository.findByNomeContainingIgnoreCase(nome, pageable);
-	    } else {
-	        skills = skillRepository.findAll(pageable);
-	    }
+		if (nome != null && !nome.isEmpty()) {
+			skills = skillRepository.findByNomeContainingIgnoreCase(nome, pageable);
+		} else {
+			skills = skillRepository.findAll(pageable);
+		}
 
-	    return skills.map(SkillDTO::new).getContent();
+		return skills.map(SkillDTO::new).getContent();
 	}
 
 	public void inserir(SkillDTO skill) {
@@ -40,11 +43,15 @@ public class SkillService {
 	}
 
 	public void excluir(Long id) {
-		SkillEntity skill = skillRepository.findById(id).get();
+		SkillEntity skill = skillRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(MESSAGEM_EXCEPTION + id));
+		;
 		skillRepository.delete(skill);
 	}
 
 	public SkillDTO buscarPorId(Long id) {
-		return new SkillDTO(skillRepository.findById(id).get());
-	}
+        SkillEntity skill = skillRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(MESSAGEM_EXCEPTION + id));
+        return new SkillDTO(skill);
+    }
 }
