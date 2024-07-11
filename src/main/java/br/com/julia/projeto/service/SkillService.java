@@ -1,9 +1,10 @@
 package br.com.julia.projeto.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.julia.projeto.dto.SkillDTO;
@@ -16,16 +17,16 @@ public class SkillService {
 	@Autowired
 	private SkillRepository skillRepository;
 
-	public List<SkillDTO> ListarTodos(String nome) {
-		List<SkillEntity> skills;
+	public List<SkillDTO> listarTodos(String nome, Pageable pageable) {
+		Page<SkillEntity> skills;
 
 		if (nome != null && !nome.isEmpty()) {
-			skills = skillRepository.findByNomeContainingIgnoreCase(nome);
+			skills = skillRepository.findByNomeContainingIgnoreCase(nome, pageable);
 		} else {
-			skills = skillRepository.findAll();
+			skills = skillRepository.findAll(pageable);
 		}
 
-		return skills.stream().map(SkillDTO::new).collect(Collectors.toList());
+		return skills.map(SkillDTO::new).getContent();
 	}
 
 	public void inserir(SkillDTO skill) {

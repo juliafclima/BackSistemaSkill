@@ -3,6 +3,8 @@ package br.com.julia.projeto.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,10 +28,15 @@ public class SkillController {
 	@Autowired
 	private SkillService skillService;
 
-	 @GetMapping
-	    public List<SkillDTO> listarTodos(@RequestParam(required = false) String nome) {
-	        return skillService.ListarTodos(nome);
-	    }
+	@GetMapping
+    public List<SkillDTO> listarTodos(
+            @RequestParam(required = false) String nome,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return skillService.listarTodos(nome, pageable);
+    }
 
 	@PostMapping
 	public void inserir(@RequestBody SkillDTO skill) {
