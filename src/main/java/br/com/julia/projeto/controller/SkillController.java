@@ -3,9 +3,6 @@ package br.com.julia.projeto.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.julia.projeto.dto.SkillDTO;
+import br.com.julia.projeto.entity.SkillEntity;
 import br.com.julia.projeto.service.SkillService;
 
 @RestController
@@ -31,14 +29,14 @@ public class SkillController {
     private SkillService skillService;
 
     @GetMapping
-    public List<SkillDTO> listarTodos(@RequestParam(required = false) String nome,
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "nome") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection) {
-
-        Sort.Direction direction = sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
-        return skillService.listarTodos(nome, pageable, sortBy, sortDirection);
+    public List<SkillEntity> listarTodos() {
+        return skillService.listarTodos();
+    }
+    
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<SkillEntity>> filtrarPorNome(@RequestParam(value = "nome") String nome) {
+        List<SkillEntity> habilidadesFiltradas = skillService.filtrarPorNome(nome);
+        return ResponseEntity.ok(habilidadesFiltradas);
     }
 
     @PostMapping
