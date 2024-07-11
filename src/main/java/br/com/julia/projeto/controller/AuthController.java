@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.julia.projeto.dto.AuthenticationDTO;
 import br.com.julia.projeto.dto.UsuarioDTO;
-import br.com.julia.projeto.entity.ErrorResponse;
 import br.com.julia.projeto.exception.ResourceNotFoundException;
+import br.com.julia.projeto.exception.entity.ErrorResponse;
+import br.com.julia.projeto.exception.entity.SuccessResponse;
 import br.com.julia.projeto.service.AuthService;
 import br.com.julia.projeto.service.UsuarioService;
+import jakarta.validation.ConstraintViolationException;
 
 @RestController
 @RequestMapping("/auth")
@@ -38,7 +40,16 @@ public class AuthController {
     }
 
     @PostMapping(value = "/novoUsuario")
-    public void inserirNovoUsuario(@RequestBody UsuarioDTO novoUsuario) {
-        usuarioService.inserirNovoUsuario(novoUsuario);
+    public ResponseEntity<?> inserirNovoUsuario(@RequestBody UsuarioDTO novoUsuario) {
+        try {
+            usuarioService.inserirNovoUsuario(novoUsuario);
+            
+            // Criar o JSON estruturado com a mensagem e o status code
+            return ResponseEntity.ok().body(new SuccessResponse("Usuário cadastrado com sucesso!", HttpStatus.OK.value()));
+        
+        } catch (Exception e) {
+        	ErrorResponse errorResponse = new ErrorResponse("Login já está em uso", HttpStatus.CONFLICT.value());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+        }
     }
 }

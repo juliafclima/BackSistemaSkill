@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.julia.projeto.dto.AcessDTO;
 import br.com.julia.projeto.dto.AuthenticationDTO;
-import br.com.julia.projeto.entity.ErrorResponse;
 import br.com.julia.projeto.exception.ResourceNotFoundException;
+import br.com.julia.projeto.exception.entity.ErrorResponse;
 import br.com.julia.projeto.security.jwt.JwtUtils;
 
 @Service
@@ -23,7 +23,7 @@ public class AuthService {
 
     @Autowired
     private JwtUtils jwtUtils;
-
+    
     public ResponseEntity<?> login(AuthenticationDTO authDto) {
         try {
             UsernamePasswordAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(
