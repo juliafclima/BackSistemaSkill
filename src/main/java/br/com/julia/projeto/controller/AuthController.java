@@ -16,7 +16,6 @@ import br.com.julia.projeto.exception.entity.ErrorResponse;
 import br.com.julia.projeto.exception.entity.SuccessResponse;
 import br.com.julia.projeto.service.AuthService;
 import br.com.julia.projeto.service.UsuarioService;
-import jakarta.validation.ConstraintViolationException;
 
 @RestController
 @RequestMapping("/auth")
