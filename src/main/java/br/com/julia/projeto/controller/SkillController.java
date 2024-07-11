@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,14 +30,15 @@ public class SkillController {
 	private SkillService skillService;
 
 	@GetMapping
-    public List<SkillDTO> listarTodos(
-            @RequestParam(required = false) String nome,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
+	public List<SkillDTO> listarTodos(@RequestParam(required = false) String nome,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size,
+			@RequestParam(defaultValue = "nome") String sortBy,
+			@RequestParam(defaultValue = "asc") String sortDirection) {
 
-        Pageable pageable = PageRequest.of(page, size);
-        return skillService.listarTodos(nome, pageable);
-    }
+		Sort.Direction direction = sortDirection.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+		Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+		return skillService.listarTodos(nome, pageable, sortBy, sortDirection);
+	}
 
 	@PostMapping
 	public void inserir(@RequestBody SkillDTO skill) {

@@ -17,16 +17,16 @@ public class SkillService {
 	@Autowired
 	private SkillRepository skillRepository;
 
-	public List<SkillDTO> listarTodos(String nome, Pageable pageable) {
-		Page<SkillEntity> skills;
+	public List<SkillDTO> listarTodos(String nome, Pageable pageable, String sortBy, String sortDirection) {
+	    Page<SkillEntity> skills;
 
-		if (nome != null && !nome.isEmpty()) {
-			skills = skillRepository.findByNomeContainingIgnoreCase(nome, pageable);
-		} else {
-			skills = skillRepository.findAll(pageable);
-		}
+	    if (nome != null && !nome.isEmpty()) {
+	        skills = skillRepository.findByNomeContainingIgnoreCase(nome, pageable);
+	    } else {
+	        skills = skillRepository.findAll(pageable);
+	    }
 
-		return skills.map(SkillDTO::new).getContent();
+	    return skills.map(SkillDTO::new).getContent();
 	}
 
 	public void inserir(SkillDTO skill) {
