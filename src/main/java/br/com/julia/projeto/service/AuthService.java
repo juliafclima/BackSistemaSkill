@@ -34,7 +34,7 @@ public class AuthService {
             UserDetailsImpl userAuthenticate = (UserDetailsImpl) authentication.getPrincipal();
 
             if (userAuthenticate == null) {
-                throw new ResourceNotFoundException("Usuário não encontrado em nossa base de dados");
+                throw new ResourceNotFoundException("Usuário com o login '" + authDto.getUsername() + "' não encontrado em nossa base de dados");
             }
 
             String token = jwtUtils.generateTokenFromUserDetailsImpl(userAuthenticate);
