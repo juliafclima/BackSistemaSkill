@@ -10,5 +10,10 @@ import br.com.julia.projeto.entity.SkillEntity;
 
 public interface SkillRepository extends JpaRepository<SkillEntity, Long> {
 	List<SkillEntity> findByNomeContainingIgnoreCase(String nome);
-    Page<SkillEntity> findAll(Pageable pageable);
+
+	List<SkillEntity> findAllByOrderByNomeAsc();
+
+	List<SkillEntity> findAllByOrderByNomeDesc();
+
+	Page<SkillEntity> findAll(Pageable pageable);
 }
