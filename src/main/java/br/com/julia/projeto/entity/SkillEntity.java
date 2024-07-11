@@ -22,19 +22,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SkillEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false, unique = true)
 	private String nome;
-	
+
 	@Column(nullable = false)
 	private String descricao;
-	
+
 	@Column(nullable = false)
 	private String url;
-	
+
 	@OneToMany
 	private List<UsuarioSkillEntity> usuarioSkillEntity;
 

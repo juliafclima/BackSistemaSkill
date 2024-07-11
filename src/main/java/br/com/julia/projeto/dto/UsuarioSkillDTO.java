@@ -16,14 +16,14 @@ public class UsuarioSkillDTO {
 	private String level;
 	private UsuarioDTO usuario;
 	private SkillDTO skill;
-	
+
 	public UsuarioSkillDTO(UsuarioSkillEntity usuarioSkill) {
 		BeanUtils.copyProperties(usuarioSkill, this);
-		
+
 		if (usuarioSkill != null && usuarioSkill.getUsuario() != null) {
 			this.usuario = new UsuarioDTO(usuarioSkill.getUsuario());
 		}
-		
+
 		if (usuarioSkill != null && usuarioSkill.getUsuario() != null) {
 			this.skill = new SkillDTO(usuarioSkill.getSkill());
 		}

@@ -11,12 +11,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SkillDTO {
-	
+
 	private Long id;
 	private String nome;
 	private String descricao;
 	private String url;
-	
+
 	public SkillDTO(SkillEntity skill) {
 		BeanUtils.copyProperties(skill, this);
 	}

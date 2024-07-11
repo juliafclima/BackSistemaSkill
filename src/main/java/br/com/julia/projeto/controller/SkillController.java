@@ -17,29 +17,29 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.julia.projeto.dto.SkillDTO;
 import br.com.julia.projeto.service.SkillService;
 
-@RestController 
+@RestController
 @RequestMapping(value = "/skill")
 @CrossOrigin(origins = "http://localhost:3000")
 public class SkillController {
 
 	@Autowired
 	private SkillService skillService;
-	
+
 	@GetMapping
 	public List<SkillDTO> listarTodos() {
 		return skillService.ListarTodos();
 	}
-	
+
 	@PostMapping
 	public void inserir(@RequestBody SkillDTO skill) {
 		skillService.inserir(skill);
 	}
-	
+
 	@PutMapping
 	public SkillDTO alterar(@RequestBody SkillDTO skill) {
 		return skillService.alterar(skill);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
 		skillService.excluir(id);

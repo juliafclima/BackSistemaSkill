@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class AcessDTO {
 
-	 private Long userId;
-	    private String token;
+	private Long userId;
+	private String token;
 
-	    public AcessDTO(Long userId, String token) {
-	        this.userId = userId;
-	        this.token = token;
-	    }
+	public AcessDTO(Long userId, String token) {
+		this.userId = userId;
+		this.token = token;
+	}
 }

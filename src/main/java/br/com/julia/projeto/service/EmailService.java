@@ -19,7 +19,7 @@ public class EmailService {
 
 	@Autowired
 	static UsuarioService usuarioService;
-	
+
 	private static JavaMailSender emailSender;
 
 	@Autowired
@@ -38,7 +38,7 @@ public class EmailService {
 
 	@Value("${spring.mail.password}")
 	private String password;
-	
+
 	@Bean
 	public JavaMailSender javaMailSender() {
 		JavaMailSenderImpl emailSender = new JavaMailSenderImpl();
@@ -53,7 +53,7 @@ public class EmailService {
 		emailSender.setJavaMailProperties(prop);
 		return emailSender;
 	}
-	
+
 	public void envioEmailCadastro(UsuarioDTO usuario) {
 		jakarta.mail.internet.MimeMessage mensagemCadastro = emailSender.createMimeMessage();
 
@@ -64,50 +64,26 @@ public class EmailService {
 			helper.setSubject("Cadastro concluido com sucesso!");
 
 			StringBuilder builder = new StringBuilder();
-			builder.append("<html>\r\n"
-					+ "  <body\r\n"
-					+ "    style=\"\r\n"
-					+ "      font-family: Arial, Helvetica, sans-serif;\r\n"
-					+ "      margin-top: 50px;\r\n"
-					+ "    \"\r\n"
-					+ "  >\r\n"
-					+ "    <div style=\"max-width: 800px\">\r\n"
+			builder.append("<html>\r\n" + "  <body\r\n" + "    style=\"\r\n"
+					+ "      font-family: Arial, Helvetica, sans-serif;\r\n" + "      margin-top: 50px;\r\n"
+					+ "    \"\r\n" + "  >\r\n" + "    <div style=\"max-width: 800px\">\r\n"
 					+ "      <h1 style=\"text-align: center\">Cadastro realizado com sucesso!</h1>\r\n"
 					+ "      <h2 style=\"text-align: center; margin-bottom: 50px\">\r\n"
-					+ "        Bem-vindo a nossa comunidade!\r\n"
-					+ "      </h2>\r\n"
-					+ "      <div\r\n"
-					+ "        style=\"\r\n"
-					+ "          display: flex;\r\n"
-					+ "          flex-direction: column;\r\n"
-					+ "          align-items: center;\r\n"
-					+ "          justify-content: center;\r\n"
-					+ "        \"\r\n"
-					+ "      >\r\n"
-					+ "        <p>\r\n"
+					+ "        Bem-vindo a nossa comunidade!\r\n" + "      </h2>\r\n" + "      <div\r\n"
+					+ "        style=\"\r\n" + "          display: flex;\r\n" + "          flex-direction: column;\r\n"
+					+ "          align-items: center;\r\n" + "          justify-content: center;\r\n" + "        \"\r\n"
+					+ "      >\r\n" + "        <p>\r\n"
 					+ "          Estamos muito felizes em te-lo conosco e esperamos que voce aproveite\r\n"
-					+ "          ao maximo nossa plataforma.\r\n"
-					+ "        </p>\r\n"
+					+ "          ao maximo nossa plataforma.\r\n" + "        </p>\r\n"
 					+ "        <p style=\"margin-bottom: 50px\">\r\n"
 					+ "          Em caso de erro, favor contatar o suporte:\r\n"
 					+ "          <strong style=\"color: #eba417\">julialimafc048@gmail.com</strong>\r\n"
-					+ "        </p>\r\n"
-					+ "      </div>\r\n"
-					+ "      <div\r\n"
-					+ "        style=\"\r\n"
-					+ "          display: flex;\r\n"
-					+ "          flex-direction: column;\r\n"
-					+ "          align-items: flex-end;\r\n"
-					+ "          justify-content: center;\r\n"
-					+ "        \"\r\n"
-					+ "      >\r\n"
-					+ "        <p>Atenciosamente,</p>\r\n"
-					+ "        <p>Julia Lima</p>\r\n"
-					+ "      </div>\r\n"
-					+ "    </div>\r\n"
-					+ "  </body>\r\n"
-					+ "</html>\r\n"
-					+ "");
+					+ "        </p>\r\n" + "      </div>\r\n" + "      <div\r\n" + "        style=\"\r\n"
+					+ "          display: flex;\r\n" + "          flex-direction: column;\r\n"
+					+ "          align-items: flex-end;\r\n" + "          justify-content: center;\r\n"
+					+ "        \"\r\n" + "      >\r\n" + "        <p>Atenciosamente,</p>\r\n"
+					+ "        <p>Julia Lima</p>\r\n" + "      </div>\r\n" + "    </div>\r\n" + "  </body>\r\n"
+					+ "</html>\r\n" + "");
 
 			helper.setText(builder.toString(), true);
 

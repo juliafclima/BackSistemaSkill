@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.julia.projeto.dto.AcessDTO;
@@ -20,24 +19,24 @@ import br.com.julia.projeto.service.UsuarioService;
 @CrossOrigin
 class AuthController {
 
-    @Autowired
-    private AuthService authService;
+	@Autowired
+	private AuthService authService;
 
-    @Autowired
-    private UsuarioService usuarioService;
+	@Autowired
+	private UsuarioService usuarioService;
 
-    @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationDTO authDto) {
-        AcessDTO accessDto = authService.login(authDto);
-        if (accessDto != null) {
-            return ResponseEntity.ok(accessDto);
-        } else {
-            return ResponseEntity.badRequest().build(); // ou qualquer tratamento de erro desejado
-        }
-    }
+	@PostMapping(value = "/login")
+	public ResponseEntity<?> login(@RequestBody AuthenticationDTO authDto) {
+		AcessDTO accessDto = authService.login(authDto);
+		if (accessDto != null) {
+			return ResponseEntity.ok(accessDto);
+		} else {
+			return ResponseEntity.badRequest().build(); // ou qualquer tratamento de erro desejado
+		}
+	}
 
-    @PostMapping(value = "/novoUsuario")
-    public void inserirNovoUsuario(@RequestBody UsuarioDTO novoUsuario) {
-        usuarioService.inserirNovoUsuario(novoUsuario);
-    }
+	@PostMapping(value = "/novoUsuario")
+	public void inserirNovoUsuario(@RequestBody UsuarioDTO novoUsuario) {
+		usuarioService.inserirNovoUsuario(novoUsuario);
+	}
 }

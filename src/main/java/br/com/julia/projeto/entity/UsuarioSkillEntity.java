@@ -2,8 +2,6 @@ package br.com.julia.projeto.entity;
 
 import org.springframework.beans.BeanUtils;
 
-import br.com.julia.projeto.dto.SkillDTO;
-import br.com.julia.projeto.dto.UsuarioDTO;
 import br.com.julia.projeto.dto.UsuarioSkillDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,25 +25,25 @@ public class UsuarioSkillEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String level;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ID_USUARIO")
 	private UsuarioEntity usuario;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ID_SKILL")
 	private SkillEntity skill;
-	
+
 	public UsuarioSkillEntity(UsuarioSkillDTO usuarioSkill) {
 		BeanUtils.copyProperties(usuarioSkill, this);
-		
+
 		if (usuarioSkill != null && usuarioSkill.getUsuario() != null) {
 			this.usuario = new UsuarioEntity(usuarioSkill.getUsuario());
 		}
-		
+
 		if (usuarioSkill != null && usuarioSkill.getUsuario() != null) {
 			this.skill = new SkillEntity(usuarioSkill.getSkill());
 		}

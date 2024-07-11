@@ -20,53 +20,42 @@ import br.com.julia.projeto.security.jwt.AuthFilterToken;
 @Configuration
 @EnableMethodSecurity
 public class WebSecutiryConfig {
-	
+
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
-	
+
 	@Bean
 	public AuthFilterToken authFilterToken() {
 		return new AuthFilterToken();
 	}
-	
+
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		
-		http
-			.cors(Customizer.withDefaults());
-		http
-			.csrf(csrf -> csrf.disable())
-			.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(auth -> auth
-					.requestMatchers(
-							"/auth/**",
-							"/v2/api-docs",
-							"/v3/api-docs",
-							"/v3/api-docs/**",
-							"/swagger-resources",
-							"/swagger-resources/**",
-							"/configuration/ui",
-							"/configuration/security",
-							"/swagger-ui/**",
-							"/webjars/**",
-							"/swagger-ui.html",
-							"/usuario/**",
-							"/skill/**",
-							"/usuario-skill/**").permitAll().anyRequest().authenticated());
-			
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+		http.cors(Customizer.withDefaults());
+		http.csrf(csrf -> csrf.disable())
+				.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/auth/**", "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/**",
+								"/swagger-resources", "/swagger-resources/**", "/configuration/ui",
+								"/configuration/security", "/swagger-ui/**", "/webjars/**", "/swagger-ui.html",
+								"/usuario/**", "/skill/**", "/usuario-skill/**")
+						.permitAll().anyRequest().authenticated());
+
 		http.addFilterBefore(authFilterToken(), UsernamePasswordAuthenticationFilter.class);
-		
+
 		return http.build();
-	}	
+	}
 }

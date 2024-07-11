@@ -10,27 +10,30 @@ import br.com.julia.projeto.entity.UsuarioEntity;
 
 public class UserDetailsImpl implements UserDetails {
 
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 
 	private String username;
-	
+
 	private String password;
-	
-	public UserDetailsImpl(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
-			super();
-			this.setId(id); 
-			this.username = username;
-			this.password = password;
-			this.authorities = authorities;
-		}
-	
+
+	public UserDetailsImpl(Long id, String username, String password,
+			Collection<? extends GrantedAuthority> authorities) {
+		super();
+		this.setId(id);
+		this.username = username;
+		this.password = password;
+		this.authorities = authorities;
+	}
+
 	public static UserDetailsImpl build(UsuarioEntity usuario) {
-			
+
 		return new UserDetailsImpl(usuario.getId(), usuario.getLogin(), usuario.getSenha(), new ArrayList<>());
 	}
-	
+
 	private Collection<? extends GrantedAuthority> authorities;
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;

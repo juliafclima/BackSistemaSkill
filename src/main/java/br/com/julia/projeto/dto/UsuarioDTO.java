@@ -17,7 +17,7 @@ public class UsuarioDTO {
 	private String login;
 	private String senha;
 	private TipoSituacaoUsuario situacao;
-	
+
 	public UsuarioDTO(UsuarioEntity usuario) {
 		BeanUtils.copyProperties(usuario, this);
 	}

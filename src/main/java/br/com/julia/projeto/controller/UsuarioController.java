@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.julia.projeto.dto.UsuarioDTO;
 import br.com.julia.projeto.service.UsuarioService;
 
-
-@RestController 
+@RestController
 @RequestMapping(value = "/usuario")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UsuarioController {
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
 
@@ -30,17 +29,17 @@ public class UsuarioController {
 	public List<UsuarioDTO> listarTodos() {
 		return usuarioService.ListarTodos();
 	}
-	
+
 	@PostMapping
 	public void inserir(@RequestBody UsuarioDTO usuario) {
 		usuarioService.inserir(usuario);
 	}
-	
+
 	@PutMapping
 	public UsuarioDTO alterar(@RequestBody UsuarioDTO usuario) {
 		return usuarioService.alterar(usuario);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable("id") Long id) {
 		usuarioService.excluir(id);

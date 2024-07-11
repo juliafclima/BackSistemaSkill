@@ -14,27 +14,27 @@ public class SkillService {
 
 	@Autowired
 	private SkillRepository skillRepository;
-	
+
 	public List<SkillDTO> ListarTodos() {
 		List<SkillEntity> skills = skillRepository.findAll();
 		return skills.stream().map(SkillDTO::new).toList();
 	}
-	
+
 	public void inserir(SkillDTO skill) {
 		SkillEntity skillEntity = new SkillEntity(skill);
 		skillRepository.save(skillEntity);
 	}
-	
+
 	public SkillDTO alterar(SkillDTO skill) {
 		SkillEntity skillEntity = new SkillEntity(skill);
 		return new SkillDTO(skillRepository.save(skillEntity));
 	}
-	
+
 	public void excluir(Long id) {
 		SkillEntity skill = skillRepository.findById(id).get();
 		skillRepository.delete(skill);
 	}
-	
+
 	public SkillDTO buscarPorId(Long id) {
 		return new SkillDTO(skillRepository.findById(id).get());
 	}

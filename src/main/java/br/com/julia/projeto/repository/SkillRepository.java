@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.julia.projeto.entity.SkillEntity;
 
-public interface SkillRepository extends JpaRepository<SkillEntity, Long>{
+public interface SkillRepository extends JpaRepository<SkillEntity, Long> {
 
 }
