@@ -10,6 +10,8 @@ import br.com.julia.projeto.entity.UsuarioSkillEntity;
 
 public interface UsuarioSkillRepository extends JpaRepository<UsuarioSkillEntity, Long> {
 
+	boolean existsByUsuarioIdAndSkillId(Long usuarioId, Long skillId);
+	
 	@Query("SELECT us FROM UsuarioSkillEntity us")
 	Page<UsuarioSkillEntity> findAllWithPagination(Pageable pageable);
 

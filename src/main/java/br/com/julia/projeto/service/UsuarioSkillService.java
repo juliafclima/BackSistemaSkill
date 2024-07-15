@@ -50,6 +50,10 @@ public class UsuarioSkillService {
     }
 
 	public void inserir(UsuarioSkillDTO usuarioSkill) {
+		if (usuarioSkillRepository.existsByUsuarioIdAndSkillId(usuarioSkill.getUsuario().getId(), usuarioSkill.getSkill().getId())) {
+            throw new RuntimeException("Este usuário já possui esta skill.");
+        }
+		
 		UsuarioSkillEntity usuarioSkillEntity = new UsuarioSkillEntity(usuarioSkill);
 		usuarioSkillRepository.save(usuarioSkillEntity);
 	}
