@@ -1,6 +1,7 @@
 package br.com.julia.projeto.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -30,6 +31,14 @@ public class UsuarioSkillService {
 		List<UsuarioSkillEntity> usuariosSkills = usuarioSkillRepository.findAll(sort);
 		return usuariosSkills.stream().map(UsuarioSkillDTO::new).toList();
 	}
+	
+	public List<UsuarioSkillDTO> filtrarPorNomeSkill(String nomeSkill) {
+        List<UsuarioSkillEntity> usuarioSkills = usuarioSkillRepository.findBySkillNomeIgnoreCaseContaining(nomeSkill);
+        return usuarioSkills.stream()
+                .map(UsuarioSkillDTO::new) 
+                .collect(Collectors.toList());
+    }
+
 
 	public void inserir(UsuarioSkillDTO usuarioSkill) {
 		UsuarioSkillEntity usuarioSkillEntity = new UsuarioSkillEntity(usuarioSkill);

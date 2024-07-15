@@ -31,10 +31,15 @@ public class UsuarioSkillController {
 	private UsuarioSkillService usuarioSkillService;
 
 	@GetMapping
-	public List<UsuarioSkillDTO> listarTodos(
-            @RequestParam(name = "ordem", defaultValue = "asc") String ordem) {
-        return usuarioSkillService.listarTodosOrdenadoPorNome(ordem);
-    }
+	public List<UsuarioSkillDTO> listarTodos(@RequestParam(name = "ordem", defaultValue = "asc") String ordem) {
+		return usuarioSkillService.listarTodosOrdenadoPorNome(ordem);
+	}
+
+	@GetMapping("/filtrar")
+	public ResponseEntity<List<UsuarioSkillDTO>> filtrarPorNome(@RequestParam(name = "nomeSkill") String nomeSkill) {
+		List<UsuarioSkillDTO> usuarioSkills = usuarioSkillService.filtrarPorNomeSkill(nomeSkill);
+		return ResponseEntity.ok(usuarioSkills);
+	}
 
 	@PostMapping
 	public ResponseEntity<Void> inserir(@RequestBody UsuarioSkillDTO usuarioSkill) {
@@ -43,26 +48,28 @@ public class UsuarioSkillController {
 	}
 
 	@PutMapping("/{id}/atualizar-nivel")
-    public ResponseEntity<?> atualizarNivel(@PathVariable("id") Long id,
-            @RequestBody Map<String, String> novoNivelMap) {
-        String novoNivel = novoNivelMap.get("novoNivel");
-        try {
-            UsuarioSkillDTO usuarioSkill = usuarioSkillService.atualizarNivel(id, novoNivel);
-            return ResponseEntity.ok(usuarioSkill);
-        } catch (ResourceNotFoundException e) {
-            ErrorResponse errorResponse = new ErrorResponse("Habilidade de usuário não encontrada com o ID: " + id, HttpStatus.NOT_FOUND.value());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-        }
-    }
+	public ResponseEntity<?> atualizarNivel(@PathVariable("id") Long id,
+			@RequestBody Map<String, String> novoNivelMap) {
+		String novoNivel = novoNivelMap.get("novoNivel");
+		try {
+			UsuarioSkillDTO usuarioSkill = usuarioSkillService.atualizarNivel(id, novoNivel);
+			return ResponseEntity.ok(usuarioSkill);
+		} catch (ResourceNotFoundException e) {
+			ErrorResponse errorResponse = new ErrorResponse("Habilidade de usuário não encontrada com o ID: " + id,
+					HttpStatus.NOT_FOUND.value());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+		}
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> excluir(@PathVariable("id") Long id) {
-        try {
-            usuarioSkillService.excluir(id);
-            return ResponseEntity.ok().build();
-        } catch (ResourceNotFoundException e) {
-            ErrorResponse errorResponse = new ErrorResponse("Habilidade de usuário não encontrada com o ID: " + id, HttpStatus.NOT_FOUND.value());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-        }
-    }
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> excluir(@PathVariable("id") Long id) {
+		try {
+			usuarioSkillService.excluir(id);
+			return ResponseEntity.ok().build();
+		} catch (ResourceNotFoundException e) {
+			ErrorResponse errorResponse = new ErrorResponse("Habilidade de usuário não encontrada com o ID: " + id,
+					HttpStatus.NOT_FOUND.value());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+		}
+	}
 }
