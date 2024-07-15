@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.julia.projeto.dto.UsuarioSkillDTO;
@@ -30,9 +31,10 @@ public class UsuarioSkillController {
 	private UsuarioSkillService usuarioSkillService;
 
 	@GetMapping
-	public List<UsuarioSkillDTO> listarTodos() {
-		return usuarioSkillService.ListarTodos();
-	}
+	public List<UsuarioSkillDTO> listarTodos(
+            @RequestParam(name = "ordem", defaultValue = "asc") String ordem) {
+        return usuarioSkillService.listarTodosOrdenadoPorNome(ordem);
+    }
 
 	@PostMapping
 	public ResponseEntity<Void> inserir(@RequestBody UsuarioSkillDTO usuarioSkill) {

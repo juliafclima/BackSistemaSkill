@@ -3,6 +3,7 @@ package br.com.julia.projeto.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.julia.projeto.dto.UsuarioSkillDTO;
@@ -20,6 +21,13 @@ public class UsuarioSkillService {
 
 	public List<UsuarioSkillDTO> ListarTodos() {
 		List<UsuarioSkillEntity> usuariosSkills = usuarioSkillRepository.findAll();
+		return usuariosSkills.stream().map(UsuarioSkillDTO::new).toList();
+	}
+
+	public List<UsuarioSkillDTO> listarTodosOrdenadoPorNome(String ordem) {
+		Sort sort = ordem.equalsIgnoreCase("asc") ? Sort.by(Sort.Direction.ASC, "skill.nome")
+				: Sort.by(Sort.Direction.DESC, "skill.nome");
+		List<UsuarioSkillEntity> usuariosSkills = usuarioSkillRepository.findAll(sort);
 		return usuariosSkills.stream().map(UsuarioSkillDTO::new).toList();
 	}
 
@@ -41,8 +49,9 @@ public class UsuarioSkillService {
 		usuarioSkillRepository.delete(usuarioSkill);
 	}
 
-	 public UsuarioSkillDTO buscarPorId(Long id) {
-	        UsuarioSkillEntity usuarioSkill = usuarioSkillRepository.findById(id)
-	                .orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
-	        return new UsuarioSkillDTO(usuarioSkill);
-	    }}
+	public UsuarioSkillDTO buscarPorId(Long id) {
+		UsuarioSkillEntity usuarioSkill = usuarioSkillRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(MENSAGEM_EXCEPTION + id));
+		return new UsuarioSkillDTO(usuarioSkill);
+	}
+}
