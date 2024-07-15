@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,10 +46,16 @@ public class UsuarioSkillController {
 	}
 
 	@GetMapping("/paginado-sorted")
-	public ResponseEntity<Page<UsuarioSkillDTO>> listarPaginadoOrdenadoPorNome(Pageable pageable) {
-		Page<UsuarioSkillDTO> page = usuarioSkillService.listarPaginadoOrdenadoPorNome(pageable);
-		return ResponseEntity.ok(page);
-	}
+	 public ResponseEntity<Page<UsuarioSkillDTO>> listarPaginadoOrdenadoPorNome(
+	            @RequestParam(name = "page", defaultValue = "0") int page,
+	            @RequestParam(name = "size", defaultValue = "10") int size,
+	            @RequestParam(name = "sort", defaultValue = "asc") String sort) {
+	        
+	        Pageable pageable = PageRequest.of(page, size, sort.equalsIgnoreCase("desc") ? Sort.by("skill.nome").descending() : Sort.by("skill.nome").ascending());
+	        
+	        Page<UsuarioSkillDTO> page1 = usuarioSkillService.listarPaginadoOrdenadoPorNome(sort, pageable);
+	        return ResponseEntity.ok(page1);
+	    }
 
 	@GetMapping("/filtrar")
 	public ResponseEntity<Page<UsuarioSkillDTO>> filtrarPorNome(@RequestParam(name = "nomeSkill") String nomeSkill,

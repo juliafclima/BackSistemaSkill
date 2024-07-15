@@ -18,4 +18,7 @@ public interface UsuarioSkillRepository extends JpaRepository<UsuarioSkillEntity
 			Pageable pageable);
 
 	Page<UsuarioSkillEntity> findAllByOrderBySkillNomeAsc(Pageable pageable);
+	
+	Page<UsuarioSkillEntity> findAllByOrderBySkillNomeDesc(Pageable pageable);
+
 }
