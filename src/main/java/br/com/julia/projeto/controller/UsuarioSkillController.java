@@ -38,18 +38,23 @@ public class UsuarioSkillController {
 	}
 
 	@GetMapping("/paginado")
-    public ResponseEntity<Page<UsuarioSkillDTO>> listarPaginado(Pageable pageable) {
-        Page<UsuarioSkillDTO> page = usuarioSkillService.listarPaginado(pageable);
-        return ResponseEntity.ok(page);
-    }
+	public ResponseEntity<Page<UsuarioSkillDTO>> listarPaginado(Pageable pageable) {
+		Page<UsuarioSkillDTO> page = usuarioSkillService.listarPaginado(pageable);
+		return ResponseEntity.ok(page);
+	}
 
-    @GetMapping("/filtrar")
-    public ResponseEntity<Page<UsuarioSkillDTO>> filtrarPorNome(
-            @RequestParam(name = "nomeSkill") String nomeSkill,
-            Pageable pageable) {
-        Page<UsuarioSkillDTO> page = usuarioSkillService.filtrarPorNomeSkillPaginado(nomeSkill, pageable);
-        return ResponseEntity.ok(page);
-    }
+	@GetMapping("/paginado-sorted")
+	public ResponseEntity<Page<UsuarioSkillDTO>> listarPaginadoOrdenadoPorNome(Pageable pageable) {
+		Page<UsuarioSkillDTO> page = usuarioSkillService.listarPaginadoOrdenadoPorNome(pageable);
+		return ResponseEntity.ok(page);
+	}
+
+	@GetMapping("/filtrar")
+	public ResponseEntity<Page<UsuarioSkillDTO>> filtrarPorNome(@RequestParam(name = "nomeSkill") String nomeSkill,
+			Pageable pageable) {
+		Page<UsuarioSkillDTO> page = usuarioSkillService.filtrarPorNomeSkillPaginado(nomeSkill, pageable);
+		return ResponseEntity.ok(page);
+	}
 
 	@PostMapping
 	public ResponseEntity<Void> inserir(@RequestBody UsuarioSkillDTO usuarioSkill) {

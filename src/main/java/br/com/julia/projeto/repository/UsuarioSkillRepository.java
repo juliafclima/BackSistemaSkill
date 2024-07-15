@@ -16,4 +16,6 @@ public interface UsuarioSkillRepository extends JpaRepository<UsuarioSkillEntity
 	@Query("SELECT us FROM UsuarioSkillEntity us WHERE LOWER(us.skill.nome) LIKE LOWER(concat('%', :nomeSkill, '%'))")
 	Page<UsuarioSkillEntity> findBySkillNomeIgnoreCaseContainingWithPagination(@Param("nomeSkill") String nomeSkill,
 			Pageable pageable);
+
+	Page<UsuarioSkillEntity> findAllByOrderBySkillNomeAsc(Pageable pageable);
 }

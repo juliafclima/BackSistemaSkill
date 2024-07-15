@@ -27,17 +27,22 @@ public class UsuarioSkillService {
 		List<UsuarioSkillEntity> usuariosSkills = usuarioSkillRepository.findAll(sort);
 		return usuariosSkills.stream().map(UsuarioSkillDTO::new).toList();
 	}
-	
-	 public Page<UsuarioSkillDTO> listarPaginado(Pageable pageable) {
-	        Page<UsuarioSkillEntity> page = usuarioSkillRepository.findAllWithPagination(pageable);
-	        return page.map(UsuarioSkillDTO::new);
-	    }
 
-	    public Page<UsuarioSkillDTO> filtrarPorNomeSkillPaginado(String nomeSkill, Pageable pageable) {
-	        Page<UsuarioSkillEntity> page = usuarioSkillRepository.findBySkillNomeIgnoreCaseContainingWithPagination(nomeSkill, pageable);
-	        return page.map(UsuarioSkillDTO::new);
-	    }
+	public Page<UsuarioSkillDTO> listarPaginado(Pageable pageable) {
+		Page<UsuarioSkillEntity> page = usuarioSkillRepository.findAllWithPagination(pageable);
+		return page.map(UsuarioSkillDTO::new);
+	}
 
+	public Page<UsuarioSkillDTO> filtrarPorNomeSkillPaginado(String nomeSkill, Pageable pageable) {
+		Page<UsuarioSkillEntity> page = usuarioSkillRepository
+				.findBySkillNomeIgnoreCaseContainingWithPagination(nomeSkill, pageable);
+		return page.map(UsuarioSkillDTO::new);
+	}
+
+	public Page<UsuarioSkillDTO> listarPaginadoOrdenadoPorNome(Pageable pageable) {
+		Page<UsuarioSkillEntity> page = usuarioSkillRepository.findAllByOrderBySkillNomeAsc(pageable);
+		return page.map(UsuarioSkillDTO::new);
+	}
 
 	public void inserir(UsuarioSkillDTO usuarioSkill) {
 		UsuarioSkillEntity usuarioSkillEntity = new UsuarioSkillEntity(usuarioSkill);
