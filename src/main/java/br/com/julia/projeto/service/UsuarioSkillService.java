@@ -1,9 +1,10 @@
 package br.com.julia.projeto.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,6 @@ public class UsuarioSkillService {
 
 	private static final String MENSAGEM_EXCEPTION = "Habilidade de usuário não encontrada com o ID: ";
 
-	public List<UsuarioSkillDTO> ListarTodos() {
-		List<UsuarioSkillEntity> usuariosSkills = usuarioSkillRepository.findAll();
-		return usuariosSkills.stream().map(UsuarioSkillDTO::new).toList();
-	}
-
 	public List<UsuarioSkillDTO> listarTodosOrdenadoPorNome(String ordem) {
 		Sort sort = ordem.equalsIgnoreCase("asc") ? Sort.by(Sort.Direction.ASC, "skill.nome")
 				: Sort.by(Sort.Direction.DESC, "skill.nome");
@@ -32,12 +28,15 @@ public class UsuarioSkillService {
 		return usuariosSkills.stream().map(UsuarioSkillDTO::new).toList();
 	}
 	
-	public List<UsuarioSkillDTO> filtrarPorNomeSkill(String nomeSkill) {
-        List<UsuarioSkillEntity> usuarioSkills = usuarioSkillRepository.findBySkillNomeIgnoreCaseContaining(nomeSkill);
-        return usuarioSkills.stream()
-                .map(UsuarioSkillDTO::new) 
-                .collect(Collectors.toList());
-    }
+	 public Page<UsuarioSkillDTO> listarPaginado(Pageable pageable) {
+	        Page<UsuarioSkillEntity> page = usuarioSkillRepository.findAllWithPagination(pageable);
+	        return page.map(UsuarioSkillDTO::new);
+	    }
+
+	    public Page<UsuarioSkillDTO> filtrarPorNomeSkillPaginado(String nomeSkill, Pageable pageable) {
+	        Page<UsuarioSkillEntity> page = usuarioSkillRepository.findBySkillNomeIgnoreCaseContainingWithPagination(nomeSkill, pageable);
+	        return page.map(UsuarioSkillDTO::new);
+	    }
 
 
 	public void inserir(UsuarioSkillDTO usuarioSkill) {

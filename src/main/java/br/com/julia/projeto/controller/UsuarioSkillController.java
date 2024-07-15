@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,11 +37,19 @@ public class UsuarioSkillController {
 		return usuarioSkillService.listarTodosOrdenadoPorNome(ordem);
 	}
 
-	@GetMapping("/filtrar")
-	public ResponseEntity<List<UsuarioSkillDTO>> filtrarPorNome(@RequestParam(name = "nomeSkill") String nomeSkill) {
-		List<UsuarioSkillDTO> usuarioSkills = usuarioSkillService.filtrarPorNomeSkill(nomeSkill);
-		return ResponseEntity.ok(usuarioSkills);
-	}
+	@GetMapping("/paginado")
+    public ResponseEntity<Page<UsuarioSkillDTO>> listarPaginado(Pageable pageable) {
+        Page<UsuarioSkillDTO> page = usuarioSkillService.listarPaginado(pageable);
+        return ResponseEntity.ok(page);
+    }
+
+    @GetMapping("/filtrar")
+    public ResponseEntity<Page<UsuarioSkillDTO>> filtrarPorNome(
+            @RequestParam(name = "nomeSkill") String nomeSkill,
+            Pageable pageable) {
+        Page<UsuarioSkillDTO> page = usuarioSkillService.filtrarPorNomeSkillPaginado(nomeSkill, pageable);
+        return ResponseEntity.ok(page);
+    }
 
 	@PostMapping
 	public ResponseEntity<Void> inserir(@RequestBody UsuarioSkillDTO usuarioSkill) {
