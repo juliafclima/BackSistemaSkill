@@ -48,8 +48,6 @@ public class AuthFilterToken extends OncePerRequestFilter {
 		} catch (Exception e) {
 			System.out.println("Ocorreu um erro ao proecssar o token");
 
-		} finally {
-
 		}
 
 		filterChain.doFilter(request, response);

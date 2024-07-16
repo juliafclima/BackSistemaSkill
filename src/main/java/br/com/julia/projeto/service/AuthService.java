@@ -18,33 +18,35 @@ import br.com.julia.projeto.security.jwt.JwtUtils;
 @Service
 public class AuthService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtils jwtUtils;
-    
-    public ResponseEntity<?> login(AuthenticationDTO authDto) {
-        try {
-            UsernamePasswordAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(
-                    authDto.getUsername(), authDto.getPassword());
+	@Autowired
+	private JwtUtils jwtUtils;
 
-            Authentication authentication = authenticationManager.authenticate(userAuth);
+	public ResponseEntity<?> login(AuthenticationDTO authDto) {
+		try {
+			UsernamePasswordAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(
+					authDto.getUsername(), authDto.getPassword());
 
-            UserDetailsImpl userAuthenticate = (UserDetailsImpl) authentication.getPrincipal();
+			Authentication authentication = authenticationManager.authenticate(userAuth);
 
-            if (userAuthenticate == null) {
-                throw new ResourceNotFoundException("Usuário com o login '" + authDto.getUsername() + "' não encontrado em nossa base de dados");
-            }
+			UserDetailsImpl userAuthenticate = (UserDetailsImpl) authentication.getPrincipal();
 
-            String token = jwtUtils.generateTokenFromUserDetailsImpl(userAuthenticate);
+			if (userAuthenticate == null) {
+				throw new ResourceNotFoundException(
+						"Usuário com o login '" + authDto.getUsername() + "' não encontrado em nossa base de dados");
+			}
 
-            AcessDTO accessDto = new AcessDTO(userAuthenticate.getId(), token);
-            return ResponseEntity.ok(accessDto);
+			String token = jwtUtils.generateTokenFromUserDetailsImpl(userAuthenticate);
 
-        } catch (BadCredentialsException e) {
-            ErrorResponse errorResponse = new ErrorResponse("Login ou senha inválidos", HttpStatus.UNAUTHORIZED.value());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
-        }
-    }
+			AcessDTO accessDto = new AcessDTO(userAuthenticate.getId(), token);
+			return ResponseEntity.ok(accessDto);
+
+		} catch (BadCredentialsException e) {
+			ErrorResponse errorResponse = new ErrorResponse("Login ou senha inválidos",
+					HttpStatus.UNAUTHORIZED.value());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+		}
+	}
 }
