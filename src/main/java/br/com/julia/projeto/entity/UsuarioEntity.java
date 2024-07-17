@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "USUARIO")
+@Table(name = "tab_usuario")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,10 +27,10 @@ public class UsuarioEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, name = "login_usuario")
 	private String login;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "senha_usuario")
 	private String senha;
 
 	@OneToMany

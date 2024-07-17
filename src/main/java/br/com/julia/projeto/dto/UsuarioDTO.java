@@ -13,7 +13,9 @@ import lombok.Setter;
 public class UsuarioDTO {
 
 	private Long id;
+
 	private String login;
+
 	private String senha;
 
 	public UsuarioDTO(UsuarioEntity usuario) {

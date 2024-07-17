@@ -50,7 +50,7 @@ public class WebSecutiryConfig {
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/auth/**", "/v2/api-docs", "/v3/api-docs", "/v3/api-docs/**",
 								"/swagger-resources", "/swagger-resources/**", "/configuration/ui",
-								"/configuration/security", "/swagger-ui/**", "/webjars/**", "/swagger-ui.html")
+								"/configuration/security", "/swagger-ui/**", "/webjars/**", "/swagger-ui.html", "/skill/**", "/usuario-skill/**")
 						.permitAll().anyRequest().authenticated());
 
 		http.addFilterBefore(authFilterToken(), UsernamePasswordAuthenticationFilter.class);

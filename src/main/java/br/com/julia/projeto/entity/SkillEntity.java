@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "SKILL")
+@Table(name = "Tab_Skill")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,13 +27,13 @@ public class SkillEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, name = "nome_skill")
 	private String nome;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "descricao_skill")
 	private String descricao;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "url_skill")
 	private String url;
 
 	@OneToMany

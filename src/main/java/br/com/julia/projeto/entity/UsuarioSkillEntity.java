@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "USUARIO_SKILL")
+@Table(name = "tab_usuario_skill")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,15 +26,15 @@ public class UsuarioSkillEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "level_usuario_skill")
 	private String level;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_USUARIO")
+	@JoinColumn(name = "id_usuario")
 	private UsuarioEntity usuario;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_SKILL")
+	@JoinColumn(name = "id_skill")
 	private SkillEntity skill;
 
 	public UsuarioSkillEntity(UsuarioSkillDTO usuarioSkill) {
