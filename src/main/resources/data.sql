@@ -1,6 +1,6 @@
 
 -- Inserir na tabela skill
-INSERT INTO public.skill(nome, descricao, url) VALUES 
+INSERT INTO public.Tab_Skill(nome_skill, descricao_skill, url_skill) VALUES 
     ('Python', 'Linguagem de programação interpretada', 'https://th.bing.com/th/id/OIP.dJToM1TiZiJA0GYwzDHwjQHaHY?rs=1&pid=ImgDetMain'),
     ('JavaScript', 'Linguagem de programação de alto nível', 'https://th.bing.com/th/id/R.f6302414f1a97b960efbc44cd0b7bf5e?rik=TQ%2bfMsswbcgl3w&pid=ImgRaw&r=0'),
     ('Java', 'Linguagem de programação de propósito geral', 'https://th.bing.com/th/id/OIP.n8pa_ux7uUyU9CJrzb1scAHaHa?rs=1&pid=ImgDetMain'),
