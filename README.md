@@ -77,6 +77,15 @@ A documentação da API está disponível no arquivo ```Create SistemaSkill.post
 
 ou via Swagger pela URL: http://localhost:8080/swagger-ui/index.html#/
 
+## Atualização do projeto
+
+Novas Features: 
+- Filtro
+- Paginação
+- Ordenação
+- Tratamento de exceção (Exception handler)
+- Validação de campos
+
 
 ## Conecte-se comigo 
 <a href="https://www.linkedin.com/in/juliafclima/" target="_blank"><img loading="lazy" src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
