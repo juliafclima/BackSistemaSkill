@@ -11,3 +11,26 @@ INSERT INTO public.Tab_Skill(nome_skill, descricao_skill, url_skill) VALUES
 	('Node.js', 'Ambiente de execução JavaScript do lado do servidor',  'https://th.bing.com/th/id/OIP.Vegzcdv1Cl8Cex_jGgVK0wAAAA?rs=1&pid=ImgDetMain'),
 	('Django', 'Framework para desenvolvimento rápido de aplicações web em Python',  'https://www.svgrepo.com/show/353657/django-icon.svg'),
 	('Angular', 'Plataforma de desenvolvimento de aplicações web em TypeScript/JavaScript',  'https://seeklogo.com/images/A/angular-icon-logo-9946B9795D-seeklogo.com.png');
+	
+INSERT INTO public.Tab_Usuario(login_usuario, senha_usuario) 
+VALUES 
+	('juliafclima', '$2a$10$rI8vT21xvy.H6fN42DTASu.jL1W4mPvIHWorJNDgPvzNCgXi8vVg2');
+	
+INSERT INTO public.Tab_Usuario_Skill(id, level_usuario_skill, id_skill, id_usuario) 
+VALUES 
+	(1, '10', 1, 1),
+	(2, '5', 2, 1),
+	(3, '7', 3, 1),
+	(4, '8', 4, 1),
+	(5, '9', 5, 1),
+	(6, '2', 6, 1),
+	(7, '5', 7, 1),
+	(8, '6', 8, 1),
+	(0, '3', 9, 1);
+	
+INSERT INTO public.tab_Anotacao(data_anotacao, id, usuario_id, descricao_anotacao) 
+VALUES 
+	('2024-07-02T14:25:00', 1, 1, 'Fazer exercícios de Java'),
+	('2024-07-01T10:06:00', 2, 1, 'Estudar Spring boot'),
+    ('2024-07-04T16:12:00', 3, 1, 'Preparar apresentação de React'),
+    ('2024-07-05T11:18:00', 4, 1, 'Ler documentação de Hibernate');
