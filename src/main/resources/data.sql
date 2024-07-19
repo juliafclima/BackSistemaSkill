@@ -28,12 +28,12 @@ VALUES
 	(8, '6', 8, 1),
 	(0, '3', 9, 1);
 	
-INSERT INTO public.tab_Anotacao(data_anotacao, id, usuario_id, descricao_anotacao) 
+INSERT INTO public.tab_Anotacao(data_anotacao, usuario_id, descricao_anotacao) 
 VALUES 
-	('2024-07-15T14:25:00', 1, 1, 'Fazer exercícios de Java'),
-	('2024-07-16T10:06:00', 2, 1, 'Estudar Spring boot'),
-    ('2024-07-16T16:12:00', 3, 1, 'Preparar apresentação de React'),
-    ('2024-07-17T11:18:00', 4, 1, 'Ler documentação de Hibernate'),
-    ('2024-07-18T09:25:00', 5, 1, 'Estudar JWT Token'),
-	('2024-07-18T10:06:00', 6, 1, 'Pesquisar sobre psicologia das cores'),
-	('2024-07-18T14:00:00', 7, 1, 'Revisar padrões de design em Java');
+	('2024-07-18T14:00:00', 1, 'Revisar padrões de design em Java'),
+	('2024-07-18T10:06:00', 1, 'Pesquisar sobre psicologia das cores'),
+    ('2024-07-18T09:25:00', 1, 'Estudar JWT Token'),
+    ('2024-07-17T11:18:00', 1, 'Ler documentação de Hibernate'),
+    ('2024-07-16T16:12:00', 1, 'Preparar apresentação de React'),
+	('2024-07-16T10:06:00', 1, 'Estudar Spring boot'),
+	('2024-07-15T14:25:00', 1, 'Fazer exercícios de Java');
