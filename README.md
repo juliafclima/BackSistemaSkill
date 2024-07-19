@@ -25,7 +25,7 @@ Certifique-se de ter o seguinte instalado em sua máquina:
 1. Clone este repositório:
 
    ```bash
-   git clone https://github.com/juliafclima/mobilesistemaskill.git
+   git clone https://github.com/juliafclima/BackSistemaSkill.git
    ```
 
 2. Execute o seguinte comando para compilar e empacotar o projeto:
@@ -43,9 +43,9 @@ Para executar o projeto, você pode utilizar o plugin Maven Spring Boot:
 mvn spring-boot:run
 ```
 
-- [Front-End web](https://github.com/juliafclima/FrontSistemaSkill)
+- [Front-End web](https://github.com/juliafclima/WebSistemaSkill)
 
-- [Front-End mobile](https://github.com/juliafclima/mobilesistemaskill)
+- [Front-End mobile](https://github.com/juliafclima/MobileSistemaSkill)
 
 ## Configuração do Banco de Dados
 
