@@ -35,12 +35,12 @@ public class AnotacaoService {
 
 	@Transactional(readOnly = true)
 	public List<AnotacaoDTO> listarAnotacoesPorUsuario(Long idUsuarioAutenticado, Long idUsuarioConsulta) {
-		if (!idUsuarioAutenticado.equals(idUsuarioConsulta)) {
-			throw new RuntimeException("Usuário não tem permissão para acessar as anotações deste usuário.");
-		}
+	    if (!idUsuarioAutenticado.equals(idUsuarioConsulta)) {
+	        throw new RuntimeException("Usuário não tem permissão para acessar as anotações deste usuário.");
+	    }
 
-		List<AnotacaoProjection> anotacoes = anotacaoRepository.findByUsuarioId(idUsuarioConsulta);
-		return anotacoes.stream().map(this::mapProjectionToDTO).collect(Collectors.toList());
+	    List<AnotacaoProjection> anotacoes = anotacaoRepository.findByUsuarioId(idUsuarioConsulta);
+	    return anotacoes.stream().map(this::mapProjectionToDTO).collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -56,9 +56,11 @@ public class AnotacaoService {
 	}
 
 	private AnotacaoDTO mapProjectionToDTO(AnotacaoProjection projection) {
-		AnotacaoDTO dto = new AnotacaoDTO();
-		dto.setDescricao(projection.getDescricao());
-		dto.setDataCriacao(projection.getDataCriacao());
-		return dto;
+	    AnotacaoDTO dto = new AnotacaoDTO();
+	    dto.setId(projection.getId()); 
+	    dto.setDescricao(projection.getDescricao());
+	    dto.setDataCriacao(projection.getDataCriacao());
+	    dto.setUsuarioId(projection.getUsuarioId()); 
+	    return dto;
 	}
 }

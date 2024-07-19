@@ -42,8 +42,8 @@ public class UsuarioEntity {
 	private List<UsuarioSkillEntity> usuarioSkillEntity;
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnoreProperties("usuario")
-	private List<AnotacaoEntity> anotacoes = new ArrayList<>();
+	  @JsonIgnoreProperties("usuario")
+    private List<AnotacaoEntity> anotacoes = new ArrayList<>();
 
 	public UsuarioEntity(UsuarioDTO usuario) {
 		BeanUtils.copyProperties(usuario, this);
